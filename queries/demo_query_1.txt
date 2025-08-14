@@ -1,0 +1,46 @@
+query GetStarShip($starship: ID!) {
+  starship(id: $starship) {
+    id
+    name
+    length
+  }
+}
+
+query GetCharacter($character: ID!) {
+  character(id: $character) {
+    name
+    friends {
+      ... on Character {
+        __typename
+        name
+      }
+
+      ... on Droid {
+        primaryFunction
+      }
+
+      ... on Human {
+        credits
+      }
+    }
+  }
+}
+
+query compare {
+  leftComparison: character(id: "han") {
+    ... comparisonFields
+  }
+  rightComparison: character(id: "r2") {
+    ... comparisonFields
+  }
+}
+
+fragment comparisonFields on Character {
+  name
+  appearsIn
+  friends {
+    name
+  }
+}
+
+
