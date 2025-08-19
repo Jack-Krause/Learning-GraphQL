@@ -35,6 +35,7 @@ query compare {
   }
 }
 
+
 fragment comparisonFields on Character {
   name
   appearsIn
@@ -42,5 +43,30 @@ fragment comparisonFields on Character {
     name
   }
 }
+
+
+query GetHeroAndFriends(
+  $character: ID!,
+  $getFriends: Boolean = false
+  ) {
+    character(id: $character) {
+      name
+      id
+      friends @include(if: $getFriends) {
+        ... on Character {
+          name
+          id
+        }
+        ... on Droid {
+          primaryFunction
+        }
+        ... on Human {
+         credits
+        }
+      }
+    }
+
+}
+
 
 
